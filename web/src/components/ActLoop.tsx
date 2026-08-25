@@ -27,7 +27,7 @@ export function ActLoop({ snapshot }: { snapshot: Snapshot }) {
       <div className="shell">
         <div className="narrow">
           <p className="eyebrow">
-            <span className="act-no">Act III</span> — The loop
+            <span className="act-no">Act IV</span> — The loop
           </p>
           <h2>A model that grades itself and starts over</h2>
           <p className="lede" style={{ marginTop: '1.5rem' }}>

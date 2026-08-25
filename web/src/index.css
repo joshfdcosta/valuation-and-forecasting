@@ -311,6 +311,30 @@ button.reset {
 }
 button.reset:hover { color: var(--slate-ink); border-color: var(--slate-ink-3); }
 
+/* ── horizon switch ────────────────────────────────────────────────── */
+
+.horizon-switch { display: flex; gap: 0; }
+
+.horizon-switch button {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--slate-ink-3);
+  background: none;
+  border: 1px solid var(--slate-rule);
+  border-right-width: 0;
+  padding: 0.34rem 0.7rem;
+  cursor: pointer;
+}
+.horizon-switch button:first-child { border-radius: 4px 0 0 4px; }
+.horizon-switch button:last-child { border-right-width: 1px; border-radius: 0 4px 4px 0; }
+.horizon-switch button:hover { color: var(--slate-ink); }
+.horizon-switch button.active {
+  color: var(--slate-ink);
+  background: var(--slate-2);
+  border-color: var(--slate-ink-3);
+}
+
 /* ── figures inside panels ─────────────────────────────────────────── */
 
 .figures {

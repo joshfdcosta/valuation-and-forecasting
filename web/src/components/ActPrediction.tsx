@@ -109,19 +109,23 @@ export function ActPrediction({ snapshot }: { snapshot: Snapshot }) {
           <div className="verdict">
             <p className="q">
               {intWithCommas(m.n)} predictions. Direction called correctly{' '}
-              {num(m.direction_accuracy_pct, 2)}% of the time. That is a coin flip,
-              measured to two decimal places.
+              {num(m.direction_accuracy_pct, 2)}% of the time
+              {m.direction_accuracy_pct < 53
+                ? ' — near enough to a coin flip to be one'
+                : ', slightly better than a coin flip'}
+              , and {beat ? 'a narrow win over' : 'still a loss to'} simply assuming no
+              change.
             </p>
           </div>
         </div>
 
         <div className="narrow" style={{ marginTop: '2.5rem' }}>
           <p>
-            The model lost to persistence by {Math.abs(m.skill_vs_baseline_pct).toFixed(2)}%.
-            I could have buried that. Instead it is the headline, because the finding is
-            the point: on daily equity closes the efficient market hypothesis is not a
-            textbook abstraction, it is a wall you hit at{' '}
-            {num(m.direction_accuracy_pct, 2)}%.
+            {beat
+              ? `The model edged the baseline by ${m.skill_vs_baseline_pct.toFixed(2)}%. That margin is far too thin to call an edge — it would not survive trading costs, and it moves between retrainings.`
+              : `The model lost to persistence by ${Math.abs(m.skill_vs_baseline_pct).toFixed(2)}%. I could have buried that. Instead it is the headline, because the finding is the point.`}{' '}
+            On daily equity closes the efficient market hypothesis is not a textbook
+            abstraction — it is a wall, and this is what hitting it looks like.
           </p>
           <p>
             What the model <em>did</em> learn is the shape of volatility. Error grows

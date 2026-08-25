@@ -3,6 +3,7 @@ import { loadSnapshot, type Snapshot } from './lib/snapshot'
 import { Hero } from './components/Hero'
 import { ActValuation } from './components/ActValuation'
 import { ActPrediction } from './components/ActPrediction'
+import { ActPatterns } from './components/ActPatterns'
 import { ActLoop } from './components/ActLoop'
 import { Closing } from './components/Closing'
 
@@ -45,6 +46,7 @@ export default function App() {
       <main id="main">
         <ActValuation snapshot={snapshot} />
         <ActPrediction snapshot={snapshot} />
+        <ActPatterns snapshot={snapshot} />
         <ActLoop snapshot={snapshot} />
         <Closing snapshot={snapshot} />
       </main>

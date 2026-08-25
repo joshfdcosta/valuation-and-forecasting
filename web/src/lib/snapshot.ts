@@ -51,6 +51,42 @@ export interface TrainingRun {
   retired_drift_pct?: number
 }
 
+export interface PatternResult {
+  pattern: string
+  horizon: number
+  n: number
+  skipped: boolean
+  significant: boolean
+  mean_return_pct?: number
+  baseline_return_pct?: number
+  edge_pct?: number
+  p_value?: number
+  hit_rate_pct?: number
+  baseline_hit_rate_pct?: number
+}
+
+export interface PatternMeta {
+  label: string
+  bias: 'bullish' | 'bearish' | 'neutral'
+  description: string
+  total_occurrences: number
+}
+
+export interface PatternStudy {
+  results: PatternResult[]
+  n_tests: number
+  n_significant: number
+  alpha: number
+  correction: string
+  bootstrap: { method: string; n_resamples: number; mean_block_length: number }
+  horizons: number[]
+  min_occurrences: number
+  meta: Record<string, PatternMeta>
+  markers: { time: string; pattern: string }[]
+  span: { from: string; to: string }
+  n_sessions: number
+}
+
 export interface Snapshot {
   generated_at: string
   ticker: string
@@ -88,6 +124,7 @@ export interface Snapshot {
     predictions: PredictionRow[]
     span: { from: string; to: string }
   }
+  patterns: PatternStudy
 }
 
 export async function loadSnapshot(): Promise<Snapshot> {

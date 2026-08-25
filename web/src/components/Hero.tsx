@@ -4,6 +4,7 @@ import { intWithCommas, num, signedPct } from '../lib/format'
 
 export function Hero({ snapshot }: { snapshot: Snapshot }) {
   const m = snapshot.backtest.metrics
+  const p = snapshot.patterns
   const runs = snapshot.backtest.training_runs.length
 
   return (
@@ -42,13 +43,24 @@ export function Hero({ snapshot }: { snapshot: Snapshot }) {
           </div>
           <div>
             <div className="fig">{num(m.direction_accuracy_pct, 2)}%</div>
-            <div className="cap">Direction called correctly — a coin flip</div>
+            <div className="cap">
+              Direction called correctly — a coin flip pays {num(50, 0)}%
+            </div>
           </div>
           <div>
             <div className={`fig ${m.skill_vs_baseline_pct > 0 ? 'up' : 'down'}`}>
               {signedPct(m.skill_vs_baseline_pct, 2)}
             </div>
             <div className="cap">Skill against a do-nothing baseline</div>
+          </div>
+          <div>
+            <div className="fig">
+              {p.n_significant}
+              <span style={{ opacity: 0.45 }}>/{p.n_tests}</span>
+            </div>
+            <div className="cap">
+              Candlestick patterns beating chance, once corrected
+            </div>
           </div>
           <div>
             <div className="fig">{runs}</div>

@@ -26,6 +26,8 @@ from src.data import features as F
 from src.data.fetch import get_candles, get_fundamentals
 from src.models import lstm
 from src.models.baseline import PersistenceBaseline
+from src.patterns.detect import PATTERN_META, detect_all
+from src.patterns.study import run_study
 from src.pipeline.train import load_config
 
 OUT = Path("web/public/snapshot.json")
@@ -224,8 +226,25 @@ def build(ticker: str) -> dict:
         for _, r in trend.iterrows()
     ]
 
-    print("[5/5] writing snapshot")
+    print("[5/6] testing candlestick patterns")
+    occurrences = detect_all(candles)
+    study = run_study(candles, occurrences)
+    print(
+        f"  {study['n_tests']} tests across {len(occurrences.columns)} patterns · "
+        f"{study['n_significant']} survive {study['correction']}"
+    )
+
+    print("[6/6] writing snapshot")
     chart = candles.tail(260)
+
+    # Pattern markers for the chart, restricted to the visible window.
+    chart_occurrences = occurrences.loc[chart.index]
+    markers = [
+        {"time": str(ts.date()), "pattern": pattern}
+        for ts, row in chart_occurrences.iterrows()
+        for pattern in chart_occurrences.columns
+        if row[pattern]
+    ]
     snapshot = {
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
         "ticker": ticker.upper(),
@@ -281,6 +300,24 @@ def build(ticker: str) -> dict:
             "predictions": rows[-400:],
             "span": {"from": rows[0]["time"], "to": rows[-1]["time"]},
         },
+        "patterns": {
+            **study,
+            "meta": {
+                key: {
+                    "label": m.label,
+                    "bias": m.bias,
+                    "description": m.description,
+                    "total_occurrences": int(occurrences[key].sum()),
+                }
+                for key, m in PATTERN_META.items()
+            },
+            "markers": markers,
+            "span": {
+                "from": str(candles.index.min().date()),
+                "to": str(candles.index.max().date()),
+            },
+            "n_sessions": int(len(candles)),
+        },
     }
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
@@ -294,6 +331,7 @@ def build(ticker: str) -> dict:
     print(f"  skill        {overall['skill_vs_baseline_pct']:+}%")
     print(f"  direction    {overall['direction_accuracy_pct']}%")
     print(f"  refits       {len(runs)}")
+    print(f"  patterns     {study['n_significant']}/{study['n_tests']} tests significant")
     return snapshot
 
 

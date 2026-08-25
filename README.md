@@ -4,19 +4,29 @@ A public portfolio piece in three parts: a discounted cash flow model you can mo
 the assumptions on, an LSTM that forecasts share prices, and the feedback loop that
 grades the forecaster against reality and retrains it when it drifts.
 
-The headline result is a negative one, and it is deliberately the headline:
+Plus a statistical study of whether candlestick patterns predict anything at all.
+
+The headline results are negative ones, and they are deliberately the headline:
 
 ```
 3,360 out-of-sample predictions   2023-12-11 → 2026-08-21
-direction accuracy                50.03%
-model MAE                         $5.20
+direction accuracy                52.50%
+model MAE                         $5.12
 persistence baseline MAE          $5.05
-skill vs baseline                 -2.87%
-drift-triggered retrains          12
+skill vs baseline                 -1.39%
+drift-triggered retrains          15
+
+candlestick patterns tested       11
+pattern/horizon tests             24
+surviving Holm-Bonferroni          0
 ```
 
-The model lost to "tomorrow's price equals today's." On daily equity closes that is
-the expected outcome, and reporting it plainly is the point of the project.
+The model lost to "tomorrow's price equals today's." Not one candlestick pattern beat
+chance once the multiple-testing correction was applied. On daily equity closes both
+are the expected outcome, and reporting them plainly is the point of the project.
+
+Exact figures shift slightly when the snapshot is regenerated, because training is
+stochastic. The site reads them from the snapshot rather than hardcoding them.
 
 ## Architecture
 
@@ -59,6 +69,21 @@ positive one. Three decisions do the work:
 The backtest is walk-forward: the model is refit on a rolling window and only ever
 sees data from strictly before the anchor it is predicting from.
 
+The candlestick study adds two more safeguards, because the naive version of that
+study is one of the easiest ways in finance to fool yourself:
+
+- **A stationary block bootstrap, not a t-test.** Overlapping forward returns are not
+  independent — a 5-day return starting today shares four days with tomorrow's. A
+  t-test reads that repetition as extra evidence and manufactures significance.
+  Resampling contiguous blocks preserves the autocorrelation instead.
+- **Holm-Bonferroni across the whole family of tests.** Eleven patterns at four
+  horizons is 24 chances to clear p &lt; 0.05 by luck. Correcting for that is the
+  difference between a finding and a coincidence you got attached to.
+
+`tests/test_patterns.py` includes the guard that matters: run the whole study on a
+synthetic random walk and zero patterns come back significant. A procedure that finds
+edges in noise is worthless, so that case is tested explicitly.
+
 Predictions are **append-then-reconcile**. A row is written with a null actual before
 the candle exists; a later pass fills it in and scores it. Nothing can be edited after
 the outcome is known, so the track record is a real one.
@@ -82,6 +107,8 @@ scripts/build_snapshot.py   walk-forward backtest → snapshot.json
 src/valuation/dcf.py        reference DCF implementation
 src/data/                   yfinance retrieval, indicators, windowing
 src/models/                 LSTM and the persistence/drift baselines
+src/patterns/detect.py      vectorised candlestick pattern rules
+src/patterns/study.py       block bootstrap + multiple-testing correction
 src/pipeline/               train, predict, reconcile, drift-detect
 src/storage/db.py           prediction ledger and training-run audit trail
 app/main.py                 FastAPI, for running the pipeline live

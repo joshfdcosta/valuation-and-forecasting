@@ -82,6 +82,14 @@ export function Closing({ snapshot }: { snapshot: Snapshot }) {
                 <span className="why">features.py</span>
               </div>
               <div className="tl-row">
+                <span className="when">Patterns</span>
+                <span className="what">
+                  Eleven candlestick patterns detected by vectorised rules, then tested
+                  with a stationary block bootstrap and Holm-Bonferroni correction
+                </span>
+                <span className="why">patterns/</span>
+              </div>
+              <div className="tl-row">
                 <span className="when">Backtest</span>
                 <span className="what">
                   Walk-forward over {cfg.train_span}-window training spans, refitting
