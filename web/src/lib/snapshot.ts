@@ -127,8 +127,25 @@ export interface Snapshot {
   patterns: PatternStudy
 }
 
+/**
+ * Unlike the JS bundle, snapshot.json has no content hash in its filename —
+ * Vite can't cache-bust it. Without `cache: 'no-store'`, a browser (or an
+ * intermediate CDN) can keep serving a stale copy after a deploy ships new
+ * code that expects a newer shape, which crashes the render with no visible
+ * error. `no-store` forces a fresh fetch every load so the two can never
+ * drift apart client-side.
+ */
 export async function loadSnapshot(): Promise<Snapshot> {
-  const res = await fetch(`${import.meta.env.BASE_URL}snapshot.json`)
+  const res = await fetch(`${import.meta.env.BASE_URL}snapshot.json`, {
+    cache: 'no-store',
+  })
   if (!res.ok) throw new Error(`snapshot.json failed to load (${res.status})`)
-  return res.json()
+
+  const data = (await res.json()) as Snapshot
+  if (!data.backtest || !data.patterns) {
+    throw new Error(
+      'snapshot.json is missing expected fields — likely a stale cached copy. Try a hard refresh.',
+    )
+  }
+  return data
 }
