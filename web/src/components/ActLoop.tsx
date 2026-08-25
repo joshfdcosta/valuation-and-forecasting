@@ -27,7 +27,7 @@ export function ActLoop({ snapshot }: { snapshot: Snapshot }) {
       <div className="shell">
         <div className="narrow">
           <p className="eyebrow">
-            <span className="act-no">Act IV</span> — The loop
+            <span className="act-no">Act IV</span> · The loop
           </p>
           <h2>A model that grades itself and starts over</h2>
           <p className="lede" style={{ marginTop: '1.5rem' }}>
@@ -37,13 +37,13 @@ export function ActLoop({ snapshot }: { snapshot: Snapshot }) {
           </p>
           <p>
             Every prediction is committed to the database with an empty actuals column.
-            When the day closes, a second pass fills in what really happened and scores
+            When the day closes, a second pass fills in what happened and scores
             the error. Nothing can be edited afterwards.
           </p>
 
           <Explain term="Drift, and why models go stale">
-            A model learns the patterns in the period it was trained on. Markets change
-            — a calm year becomes a volatile one, interest rates move, the crowd changes
+            A model learns the patterns in the period it was trained on. Markets change:
+            a calm year becomes a volatile one, interest rates move, the crowd changes
             its mind. When that happens the old patterns stop applying and the model
             quietly gets worse. That decay is called <strong>drift</strong>. This system
             watches its own recent error and, when it runs more than{' '}
@@ -53,8 +53,8 @@ export function ActLoop({ snapshot }: { snapshot: Snapshot }) {
 
           <p>
             That is the part employers actually care about. Training a model once is a
-            coursework exercise. Keeping one honest in production — noticing it has gone
-            stale and doing something about it without a human watching — is the job.
+            coursework exercise. Keeping one honest in production, noticing it has gone
+            stale and doing something about it without a human watching, is the job.
           </p>
         </div>
 
@@ -69,7 +69,7 @@ export function ActLoop({ snapshot }: { snapshot: Snapshot }) {
           <ErrorTrendChart snapshot={snapshot} />
 
           <ReadThis>
-            Both lines are average error per month — orange is the model, grey is the
+            Both lines are average error per month: orange is the model, grey is the
             do-nothing baseline. Lower is better. The dotted verticals mark the moments
             drift crossed the threshold and the model was rebuilt. The two lines sitting
             on top of each other for two and a half years is the whole story.
@@ -89,7 +89,7 @@ export function ActLoop({ snapshot }: { snapshot: Snapshot }) {
             I chose periodic refits on a rolling window over true online learning. Per
             sample weight updates on data this noisy drift into catastrophic forgetting,
             and there is no clean way to roll a bad update back. A refit is
-            reproducible, auditable, and revertible to any previous artefact — which
+            reproducible, auditable, and revertible to any previous artefact, which
             matters more than elegance when the thing you are building has to be
             trusted.
           </p>

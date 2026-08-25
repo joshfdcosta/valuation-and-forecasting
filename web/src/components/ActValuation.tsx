@@ -89,7 +89,7 @@ export function ActValuation({ snapshot }: { snapshot: Snapshot }) {
       <div className="shell">
         <div className="narrow">
           <p className="eyebrow">
-            <span className="act-no">Act I</span> — Valuation
+            <span className="act-no">Act I</span> · Valuation
           </p>
           <h2>What is a company actually worth?</h2>
           <p className="lede" style={{ marginTop: '1.5rem' }}>
@@ -100,12 +100,12 @@ export function ActValuation({ snapshot }: { snapshot: Snapshot }) {
           </p>
 
           <Explain term="Why discount future cash at all">
-            A pound next year is worth less than a pound today — you could have
+            A pound next year is worth less than a pound today: you could have
             invested today's pound, and next year's might not arrive. So we shrink each
             future year's cash by a rate that reflects both. That rate is the{' '}
             <strong>discount rate</strong>, or WACC. A high rate means you think the
-            business is risky and you demand more for holding it. It is the single most
-            powerful input in the model.
+            business is risky and you demand more for holding it. It is the single
+            input that moves the valuation more than any other.
           </Explain>
 
           <p>
@@ -113,7 +113,7 @@ export function ActValuation({ snapshot }: { snapshot: Snapshot }) {
             existing in year {a.forecastYears}. Everything after that gets bundled into
             one number called the <strong>terminal value</strong>, calculated by
             assuming the business grows steadily forever at some modest rate. That
-            single assumption usually carries most of the valuation — for this company
+            single assumption usually carries most of the valuation: for this company
             it is {pct(v.terminalShare, 0)} of the total, which the panel below states
             outright rather than burying.
           </p>
@@ -217,8 +217,8 @@ export function ActValuation({ snapshot }: { snapshot: Snapshot }) {
             Each column is one forecast year. Revenue grows, a margin turns it into
             operating profit, tax comes off, then the non-cash and cash items that the
             income statement misses: depreciation added back, capital spending and
-            working capital taken out. What survives is <strong>free cash flow</strong>{' '}
-            — the cash actually available to whoever owns the business. The last row
+            working capital taken out. What survives is <strong>free cash flow</strong>,
+            the cash actually available to whoever owns the business. The last row
             shrinks each year back to today's money.
           </ReadThis>
 
@@ -269,7 +269,7 @@ export function ActValuation({ snapshot }: { snapshot: Snapshot }) {
             The same company valued under twenty-five different pairs of assumptions.
             Rows vary the discount rate, columns vary how fast you think the business
             grows forever. The highlighted cell is the one the sliders are currently
-            set to. Notice how far the corners are from each other — that spread is the
+            set to. Notice how far the corners are from each other. That spread is the
             honest uncertainty in any valuation.
           </ReadThis>
 
@@ -311,7 +311,7 @@ export function ActValuation({ snapshot }: { snapshot: Snapshot }) {
             <p className="q">
               {implied
                 ? `At today's price the market is pricing in a ${pct(implied, 1)} required return. My model says ${pct(a.wacc, 1)}. The gap between those two numbers is the entire argument.`
-                : `The market price sits outside the range this model can reach at any plausible discount rate — which is itself the finding.`}
+                : `The market price sits outside the range this model can reach at any plausible discount rate, which is itself the finding.`}
             </p>
           </div>
         </div>

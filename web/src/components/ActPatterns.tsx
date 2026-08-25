@@ -122,27 +122,27 @@ export function ActPatterns({ snapshot }: { snapshot: Snapshot }) {
       <div className="shell">
         <div className="narrow">
           <p className="eyebrow">
-            <span className="act-no">Act III</span> — Candlestick patterns
+            <span className="act-no">Act III</span> · Candlestick patterns
           </p>
           <h2>Do the shapes traders swear by actually predict anything?</h2>
           <p className="lede" style={{ marginTop: '1.5rem' }}>
-            Technical analysis holds that certain candle shapes — a hammer, an
-            engulfing candle, a morning star — signal what price does next. They have
+            Technical analysis holds that certain candle shapes, like a hammer, an
+            engulfing candle, or a morning star, signal what price does next. They have
             names, centuries of history, and enormous conviction behind them. They are
             also a testable claim, so I tested them.
           </p>
 
           <Explain term="What a candlestick actually shows">
-            One candle is one day. The thick body spans the opening and closing price;
+            One candle is one day. The thick body spans the opening and closing price,
             the thin wicks reach to the high and low. A tall body means the price moved
-            decisively; a long wick means it went somewhere and came back. Patterns are
+            decisively. A long wick means it went somewhere and came back. Patterns are
             named combinations of one to three of these shapes.
           </Explain>
 
           <p>
             I detected {Object.keys(p.meta).length} classic patterns across{' '}
             {intWithCommas(p.n_sessions)} trading sessions, then measured what the price
-            did over the following {p.horizons.join(', ')} days after each occurrence —
+            did over the following {p.horizons.join(', ')} days after each occurrence,
             and compared that with what the price did on a normal day over the same
             period. If a pattern predicts nothing, those two numbers should match.
           </p>
@@ -158,7 +158,7 @@ export function ActPatterns({ snapshot }: { snapshot: Snapshot }) {
           </Explain>
 
           <Explain term="Why not a standard significance test">
-            The usual t-test assumes each measurement is independent. These are not — a
+            The usual t-test assumes each measurement is independent. These are not: a
             five-day return starting today overlaps four days with tomorrow's, so the
             data repeats itself and a t-test reads that repetition as extra evidence.
             Instead I use a <strong>{p.bootstrap.method}</strong>: resampling
@@ -263,8 +263,8 @@ export function ActPatterns({ snapshot }: { snapshot: Snapshot }) {
               <>
                 Nothing here beats chance. The strongest single result was{' '}
                 {p.meta[bestRaw?.pattern]?.label ?? bestRaw?.pattern} at{' '}
-                {bestRaw?.horizon} days, with a p-value of {num(bestRaw?.p_value, 3)} —
-                and even that is what you would expect to see somewhere among{' '}
+                {bestRaw?.horizon} days, with a p-value of {num(bestRaw?.p_value, 3)}.
+                Even that is what you would expect to see somewhere among{' '}
                 {p.n_tests} attempts on data with no signal at all.
               </>
             ) : (
@@ -278,8 +278,8 @@ export function ActPatterns({ snapshot }: { snapshot: Snapshot }) {
           <p>
             This is the same conclusion Act II reached by a completely different route.
             A neural network with sixty days of history could not beat assuming no
-            change; centuries of chart-reading tradition cannot either. Two independent
-            methods, one answer — which is a lot more convincing than either on its own.
+            change. Centuries of chart-reading tradition cannot either. Two independent
+            methods, one answer. That's a lot more convincing than either on its own.
           </p>
           <p>
             None of that makes candlesticks useless. They are a genuinely good way to

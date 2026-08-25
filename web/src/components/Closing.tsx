@@ -76,7 +76,7 @@ export function Closing({ snapshot }: { snapshot: Snapshot }) {
               <div className="tl-row">
                 <span className="when">Features</span>
                 <span className="what">
-                  {cfg.indicators.join(', ')} — all trailing-window, all computed
+                  {cfg.indicators.join(', ')}, all trailing-window, all computed
                   strictly before the anchor
                 </span>
                 <span className="why">features.py</span>
@@ -100,7 +100,7 @@ export function Closing({ snapshot }: { snapshot: Snapshot }) {
               <div className="tl-row">
                 <span className="when">Storage</span>
                 <span className="what">
-                  Append-then-reconcile prediction ledger in SQLAlchemy; forecasts are
+                  Append-then-reconcile prediction ledger in SQLAlchemy. Forecasts are
                   written before outcomes exist and cannot be edited afterwards
                 </span>
                 <span className="why">db.py</span>
@@ -122,7 +122,7 @@ export function Closing({ snapshot }: { snapshot: Snapshot }) {
               approximated with business days, which overcounts by roughly nine
               holidays a year. The model predicts each candle leg independently and can
               return an incoherent bar, so coherence is clamped after the fact rather
-              than constrained in the architecture. And this is one ticker — there are
+              than constrained in the architecture. And this is one ticker. There are
               no cross-sectional or sector features. None of that is hidden in the
               repository either.
             </div>

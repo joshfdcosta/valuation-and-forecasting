@@ -15,7 +15,7 @@ export function ActPrediction({ snapshot }: { snapshot: Snapshot }) {
       <div className="shell">
         <div className="narrow">
           <p className="eyebrow">
-            <span className="act-no">Act II</span> — Prediction
+            <span className="act-no">Act II</span> · Prediction
           </p>
           <h2>Can a neural network forecast a share price?</h2>
           <p className="lede" style={{ marginTop: '1.5rem' }}>
@@ -27,18 +27,18 @@ export function ActPrediction({ snapshot }: { snapshot: Snapshot }) {
 
           <Explain term="What an LSTM is">
             A type of neural network built for sequences. Ordinary networks look at one
-            snapshot; an LSTM reads a run of days in order and carries a memory of what
+            snapshot. An LSTM reads a run of days in order and carries a memory of what
             came earlier, so it can pick up on patterns that unfold over time. That
-            makes it a reasonable choice for prices — and a fair test of whether such
+            makes it a reasonable choice for prices, and a fair test of whether such
             patterns exist at all.
           </Explain>
 
           <Explain term="Why you need a baseline">
             "The model was 97% accurate" means nothing on its own. Accurate compared to
-            what? The honest comparison is <strong>persistence</strong>: just guess that
+            what? The honest comparison is <strong>persistence</strong>: guess that
             tomorrow's price equals today's. It is free, needs no model, and on a liquid
-            share it is very hard to beat, because prices move mostly on news nobody had
-            yesterday. Any forecast that cannot clear that bar has learned nothing —
+            share it is hard to beat, because prices move mostly on news nobody had
+            yesterday. Any forecast that cannot clear that bar has learned nothing,
             even if its raw error looks small.
           </Explain>
 
@@ -46,7 +46,7 @@ export function ActPrediction({ snapshot }: { snapshot: Snapshot }) {
             The tempting mistake is to train on all your data and then test on a slice
             of it. The model has already seen the answers, so it scores brilliantly and
             fails in real life. Walking forward means the model is only ever trained on
-            days <em>before</em> the one it is predicting — the same information it
+            days <em>before</em> the one it is predicting: the same information it
             would have had at the time. It is the difference between a real track record
             and marking your own homework.
           </Explain>
@@ -99,7 +99,7 @@ export function ActPrediction({ snapshot }: { snapshot: Snapshot }) {
 
           <ReadThis>
             <strong>Direction accuracy</strong> is how often the model got up-or-down
-            right — 50% is a coin flip.{' '}
+            right. 50% is a coin flip.{' '}
             <strong>Mean absolute error</strong> is how far off it was in dollars, on
             average. <strong>Skill versus baseline</strong> is the only one that
             settles the argument: positive means the model beat just guessing today's
@@ -111,7 +111,7 @@ export function ActPrediction({ snapshot }: { snapshot: Snapshot }) {
               {intWithCommas(m.n)} predictions. Direction called correctly{' '}
               {num(m.direction_accuracy_pct, 2)}% of the time
               {m.direction_accuracy_pct < 53
-                ? ' — near enough to a coin flip to be one'
+                ? ', near enough to a coin flip to be one'
                 : ', slightly better than a coin flip'}
               , and {beat ? 'a narrow win over' : 'still a loss to'} simply assuming no
               change.
@@ -122,15 +122,15 @@ export function ActPrediction({ snapshot }: { snapshot: Snapshot }) {
         <div className="narrow" style={{ marginTop: '2.5rem' }}>
           <p>
             {beat
-              ? `The model edged the baseline by ${m.skill_vs_baseline_pct.toFixed(2)}%. That margin is far too thin to call an edge — it would not survive trading costs, and it moves between retrainings.`
+              ? `The model edged the baseline by ${m.skill_vs_baseline_pct.toFixed(2)}%. That margin is far too thin to call an edge. It would not survive trading costs, and it moves between retrainings.`
               : `The model lost to persistence by ${Math.abs(m.skill_vs_baseline_pct).toFixed(2)}%. I could have buried that. Instead it is the headline, because the finding is the point.`}{' '}
             On daily equity closes the efficient market hypothesis is not a textbook
-            abstraction — it is a wall, and this is what hitting it looks like.
+            abstraction. It is a wall, and this is what hitting it looks like.
           </p>
           <p>
             What the model <em>did</em> learn is the shape of volatility. Error grows
-            with horizon exactly as it should — uncertainty compounds the further out
-            you forecast — and it tracks the baseline at every step rather than
+            with horizon exactly as it should, since uncertainty compounds the further
+            out you forecast, and it tracks the baseline at every step rather than
             diverging. That is a model correctly learning that there is little to learn.
           </p>
         </div>
@@ -146,7 +146,7 @@ export function ActPrediction({ snapshot }: { snapshot: Snapshot }) {
             Orange is the model, grey is the do-nothing baseline, grouped by how many
             days ahead the forecast was. Both bars grow together as you look further
             out, and the orange never gets meaningfully shorter than the grey. Growing
-            error is correct behaviour — the future gets harder to see. Failing to beat
+            error is correct behaviour. The future gets harder to see. Failing to beat
             grey at any horizon is the finding.
           </ReadThis>
         </div>

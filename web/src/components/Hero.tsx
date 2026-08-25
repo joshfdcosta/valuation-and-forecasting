@@ -22,10 +22,10 @@ export function Hero({ snapshot }: { snapshot: Snapshot }) {
         <p className="lede hero-thesis">{profile.thesis}</p>
 
         <p style={{ maxWidth: '46ch', marginTop: '1rem', fontSize: '0.95rem' }}>
-          Everything below is live or measured — the valuation runs in your browser as
+          Everything below is live or measured. The valuation runs in your browser as
           you move it, and the forecasting numbers come from a real backtest. If you
-          know roughly what a cash flow and a neural network are, you know enough; the
-          rest is explained as it comes up.
+          know roughly what a cash flow and a neural network are, you know enough. The
+          rest gets explained as it comes up.
         </p>
 
         <nav className="hero-links" aria-label="Contact">
@@ -44,7 +44,7 @@ export function Hero({ snapshot }: { snapshot: Snapshot }) {
           <div>
             <div className="fig">{num(m.direction_accuracy_pct, 2)}%</div>
             <div className="cap">
-              Direction called correctly — a coin flip pays {num(50, 0)}%
+              Direction called correctly (a coin flip pays {num(50, 0)}%)
             </div>
           </div>
           <div>
