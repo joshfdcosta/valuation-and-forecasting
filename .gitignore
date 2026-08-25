@@ -1,0 +1,29 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Generated data. snapshot.json is deliberately NOT ignored — it is the site's
+# data and must ship with the build.
+data/cache/
+data/models/
+data/*.db
+
+# Node
+node_modules/
+web/dist/
+*.local
+
+# Secrets
+.env
+.env.*
+*.key
+*.pem
+
+# Editor
+.DS_Store
+Thumbs.db
+
+# Tooling caches
+.impeccable/
